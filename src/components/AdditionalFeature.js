@@ -1,15 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+
+import { addFeature } from '../actions/CarActions';
 
 const AdditionalFeature = props => {
-  const dispatch = useDispatch();
-
   return (
     <li>
       {/* Add an onClick that will let you add a feature to your car */}
       <button 
         className="button"
-        onClick={() => dispatch({ type: 'ADD_FEATURE', payload: props.feature})}
+        onClick={() => props.addFeature(props.feature)}
       >
         Add
       </button>
@@ -18,4 +18,11 @@ const AdditionalFeature = props => {
   );
 };
 
-export default AdditionalFeature;
+const mapStateToProps = state => {
+  return {
+    name: state.car.features.name,
+    price: state.car.features.price
+  };
+};
+
+export default connect(mapStateToProps, { addFeature })(AdditionalFeature);
